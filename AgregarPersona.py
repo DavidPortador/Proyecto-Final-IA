@@ -13,7 +13,7 @@ def newPersona(personName, ventana):
 
     cap = cv2.VideoCapture(0)
     #cap = cv2.VideoCapture('Video.mp4')
-    faceClassif = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    faceClassif = cv2.CascadeClassifier('Modelos/haarcascade_frontalface_default.xml')
     count = 0
     while True:
         ret, frame = cap.read()

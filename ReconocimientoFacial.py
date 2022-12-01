@@ -2,15 +2,15 @@ from tkinter import *
 import cv2
 import os
 def reconocimeinto(ventana):
-	dataPath = 'Personas' #Cambia a la ruta donde hayas almacenado Data
+	dataPath = 'Personas'
 	imagePaths = os.listdir(dataPath)
 	print('imagePaths=',imagePaths)
 	face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 	# Leyendo el modelo
-	face_recognizer.read('modeloLBPHFace.xml')
+	face_recognizer.read('Modelos/modeloLBPHFace.xml')
 	cap = cv2.VideoCapture(0)
 	#cap = cv2.VideoCapture('Video.mp4')
-	faceClassif = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+	faceClassif = cv2.CascadeClassifier('Modelos/haarcascade_frontalface_default.xml')
 	ventana.destroy()
 	while True:
 		ret,frame = cap.read()

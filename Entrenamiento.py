@@ -40,6 +40,6 @@ def entrenar():
 	# Almacenando el modelo obtenido
 	#face_recognizer.write('modeloEigenFace.xml')
 	#face_recognizer.write('modeloFisherFace.xml')
-	face_recognizer.write('modeloLBPHFace.xml')
+	face_recognizer.write('Modelos/modeloLBPHFace.xml')
 	print("Modelo almacenado...")
 	messagebox.showinfo(message="La creación del modelo de entrenamiento se creo exitosamente!", title="Entrenamiento")

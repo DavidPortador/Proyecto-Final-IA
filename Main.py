@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from tkinter import *
 from PIL import ImageTk
 from PIL import Image
@@ -6,7 +7,7 @@ import cv2
 import os
 import ReconocimientoFacial
 import AgregarPersona
-import entrenamiento
+import Entrenamiento
 
 def iniciar():
     global cap
@@ -15,7 +16,7 @@ def iniciar():
     
 def visualizar():
     global cap
-    face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    face_cascade = cv2.CascadeClassifier('Modelos/haarcascade_frontalface_default.xml')
     if cap is not None:
         ret, frame = cap.read()
         if ret == True:
@@ -54,9 +55,15 @@ def addPersona():
     accept_button.pack()
     emergente.mainloop()
 
+def agregar(caja, emergente):
+    nombre = caja.get("1.0","end-1c")
+    nombre = nombre.strip()
+    print(nombre)
+    AgregarPersona.newPersona(nombre, emergente)
+
 def verPersonas():
     per = Tk()
-    per.title("Nombre completo")
+    per.title("Lista de personas registradas")
     msj = Label(per,text='Nombre completo de la personas registradas')
     msj.pack(ipadx=5,ipady=5,expand=True)
     dataPath = 'Personas'
@@ -66,14 +73,18 @@ def verPersonas():
     nombres.pack(ipadx=5,ipady=5,expand=True)
     per.mainloop()
 
-def agregar(caja, emergente):
-    nombre = caja.get("1.0","end-1c")
-    nombre = nombre.strip()
-    print(nombre)
-    AgregarPersona.newPersona(nombre, emergente)
+def acerca():
+    acerca = Tk()
+    acerca.title("Acerca de")
+    msj = Label(acerca,text='Equipi AI\n\nSistema de securidad para personal del ITC\n\nIntegrantes\nGarcia Gonzalez Misael\nGarcia Jauregui Oscar Rodolfo\nLuis David Garcia Ramirez\nMiranda Silva Daniel\nSoto Mejia Luis Alberto')
+    msj.pack(ipadx=5,ipady=5,expand=True)
+    acerca.mainloop()
 
 def entrenar():
-    entrenamiento.entrenar()
+    Entrenamiento.entrenar()
+
+def proximanente():
+    messagebox.showinfo(message="Funcionalidad en proceso de desarrollo", title="Proximanente...")
 
 def initGUI():
     menubar = Menu(ventana)
@@ -85,8 +96,8 @@ def initGUI():
 
     # Menú Interfaz
     intmenu = Menu(menubar, tearoff=0)
-    intmenu.add_command(label="Iniciar Interfaz Principal", command=iniciar)
-    intmenu.add_command(label="Detener Interfaz Principal", command=finalizar)
+    intmenu.add_command(label="Iniciar Interfaz NO Entrenada", command=iniciar)
+    intmenu.add_command(label="Detener Interfaz NO Entrenada", command=finalizar)
     intmenu.add_separator()
     intmenu.add_command(label="Iniciar Interfaz de Reconocimiento Entrenada", command=viewReconocimiento)
     intmenu.add_separator()
@@ -97,19 +108,19 @@ def initGUI():
     personmenu.add_command(label="Agregar Persona", command=addPersona)
     personmenu.add_command(label="Ver personas", command=verPersonas)
     personmenu.add_separator()
-    personmenu.add_command(label="Eliminar Persona")
+    personmenu.add_command(label="Eliminar Persona", command=proximanente)
 
     # Menú Entrenamiento
     editmenu = Menu(menubar, tearoff=0)
     editmenu.add_command(label="Entrenar", command=entrenar)
     editmenu.add_separator()
-    editmenu.add_command(label="Reiniciar entrenamiento!")
+    editmenu.add_command(label="Reiniciar entrenamiento!", command=proximanente)
 
     # Menú Ayuda
     helpmenu = Menu(menubar, tearoff=0)
-    helpmenu.add_command(label="Ayuda")
+    helpmenu.add_command(label="Ayuda", command=proximanente)
     helpmenu.add_separator()
-    helpmenu.add_command(label="Acerca de...")
+    helpmenu.add_command(label="Acerca de...", command=acerca)
 
     # Todos los menús
     menubar.add_cascade(label="Interfaz", menu=intmenu)
