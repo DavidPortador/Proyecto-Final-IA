@@ -9,6 +9,7 @@ import ReconocimientoFacial
 import AgregarPersona
 import Entrenamiento
 
+# Mostrar transmision en la misma interfaz (opcv -> tkinter)
 def iniciar():
     global cap
     cap = cv2.VideoCapture(0)
@@ -40,11 +41,11 @@ def finalizar():
     global cap
     cap.release()
 
-def viewReconocimiento():
+# Métodos para el submenú
+def verReconocimiento():
     ReconocimientoFacial.reconocimeinto(ventana)
 
-def addPersona():
-    #mb.showinfo("Información", "texto uwu")
+def persona():
     emergente = Tk()
     emergente.title("Nombre completo")
     lbl = Label(emergente,text='Nombre completo de la persona')
@@ -59,7 +60,7 @@ def agregar(caja, emergente):
     nombre = caja.get("1.0","end-1c")
     nombre = nombre.strip()
     print(nombre)
-    AgregarPersona.newPersona(nombre, emergente)
+    AgregarPersona.nuevaPersona(nombre, emergente)
 
 def verPersonas():
     per = Tk()
@@ -86,6 +87,7 @@ def entrenar():
 def proximanente():
     messagebox.showinfo(message="Funcionalidad en proceso de desarrollo", title="Proximanente...")
 
+# Inicializar componentes de la interfaz principal
 def initGUI():
     menubar = Menu(ventana)
     width = 910
@@ -93,35 +95,30 @@ def initGUI():
     ventana.geometry("%dx%d" % (width, height))
     ventana.title("Proycto Final IA")
     ventana.config(menu=menubar)
-
     # Menú Interfaz
     intmenu = Menu(menubar, tearoff=0)
     intmenu.add_command(label="Iniciar Interfaz NO Entrenada", command=iniciar)
     intmenu.add_command(label="Detener Interfaz NO Entrenada", command=finalizar)
     intmenu.add_separator()
-    intmenu.add_command(label="Iniciar Interfaz de Reconocimiento Entrenada", command=viewReconocimiento)
+    intmenu.add_command(label="Iniciar Interfaz de Reconocimiento Entrenada", command=verReconocimiento)
     intmenu.add_separator()
     intmenu.add_command(label="Salir", command=ventana.destroy)
-
     # Menú Personas
     personmenu = Menu(menubar, tearoff=0)
-    personmenu.add_command(label="Agregar Persona", command=addPersona)
+    personmenu.add_command(label="Agregar Persona", command=persona)
     personmenu.add_command(label="Ver personas", command=verPersonas)
     personmenu.add_separator()
     personmenu.add_command(label="Eliminar Persona", command=proximanente)
-
     # Menú Entrenamiento
     editmenu = Menu(menubar, tearoff=0)
     editmenu.add_command(label="Entrenar", command=entrenar)
     editmenu.add_separator()
     editmenu.add_command(label="Reiniciar entrenamiento!", command=proximanente)
-
     # Menú Ayuda
     helpmenu = Menu(menubar, tearoff=0)
     helpmenu.add_command(label="Ayuda", command=proximanente)
     helpmenu.add_separator()
     helpmenu.add_command(label="Acerca de...", command=acerca)
-
     # Todos los menús
     menubar.add_cascade(label="Interfaz", menu=intmenu)
     menubar.add_cascade(label="Personas", menu=personmenu)
@@ -133,7 +130,6 @@ def initGUI():
 global cap
 ventana = Tk()
 initGUI()
-
 # Label con transmision de la camara en tiempo real
 lblVideo = Label(ventana)
 lblVideo.grid(column=0, row=1, columnspan=2)

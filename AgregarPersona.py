@@ -1,18 +1,19 @@
+from tkinter import messagebox
 from tkinter import *
 import cv2
 import os
 import imutils
-def newPersona(personName, ventana):
-    #personName = 'David'
+
+# Toma como parametro el nombre y crea una interfaz para capturas 300 datos de un rostro
+def nuevaPersona(personName, ventana):
     ventana.destroy()
     dataPath = 'Personas'
     personPath = dataPath + '/' + personName
     if not os.path.exists(personPath):
         print('Carpeta creada: ',personPath)
+        messagebox.showinfo(message="Carpeta base de entrenamiento de rostros creada", title="Carpeta creada")
         os.makedirs(personPath)
-
     cap = cv2.VideoCapture(0)
-    #cap = cv2.VideoCapture('Video.mp4')
     faceClassif = cv2.CascadeClassifier('Modelos/haarcascade_frontalface_default.xml')
     count = 0
     while True:
@@ -30,7 +31,8 @@ def newPersona(personName, ventana):
             count = count + 1
         cv2.imshow('frame',frame)
         k =  cv2.waitKey(1)
-        if k == 27 or count >= 300: #Captura 300 rostros
+        # Captura 300 rostros
+        if k == 27 or count >= 300:
             break
     cap.release()
     cv2.destroyAllWindows()
